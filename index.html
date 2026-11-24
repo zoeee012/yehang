@@ -1,0 +1,30 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><meta name="theme-color" content="#14162B"><meta name="color-scheme" content="light dark"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="夜航"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png"><link rel="apple-touch-icon" href="./icon-180.png"><title>夜航</title><style>
+      /*
+       * 移动端布局有两件事：
+       *
+       * 1) 键盘。viewport 里声明了 interactive-widget=resizes-content，键盘弹出时浏览器会压缩
+       *    布局视口，输入框被顶到键盘上方，和 DeepSeek App 的手感一致。应用自带的
+       *    visualViewport 适配仍然保留，两条路径互补，谁先生效都不会冲突。
+       *
+       * 2) 顶部徽标。Netlify 免费版会往页面注入 "Powered by Netlify" 浮标（64px 高）。
+       *    现在的站点托管在 GitHub Pages，没有徽标，所以默认不预留任何空白；
+       *    只有检测到该浮标存在（:has）时才让出 72px 并把它挪到顶部。
+       *    高度用 env(safe-area-inset-top) 兜住刘海屏/状态栏。
+       */
+      @media (max-width: 767px) {
+        :root {
+          --app-viewport-top: 0px;
+          --app-viewport-height: 100dvh;
+        }
+
+        body:has(#nl-badge-frame) {
+          --app-viewport-top: calc(72px + env(safe-area-inset-top, 0px));
+          --app-viewport-height: calc(100dvh - 72px - env(safe-area-inset-top, 0px));
+        }
+
+        #nl-badge-frame {
+          top: env(safe-area-inset-top, 0px) !important;
+          bottom: auto !important;
+        }
+      }
+    </style><script>if(!function(){var e=[],t=!1;function o(){for(;e.length;)clearTimeout(e.pop())}function r(){return document.querySelector('[class*="frame-"]')}function n(){var e=r(),o=window.visualViewport,n=document.activeElement;if(e&&o&&n&&/^(TEXTAREA|INPUT)$/.test(n.tagName)){var i=Math.round(o.height);i>=window.innerHeight-40||(e.style.setProperty("--app-viewport-height",i+"px"),e.style.setProperty("--app-viewport-top",Math.round(o.offsetTop||0)+"px"),t=!0)}}function i(){if(t){t=!1;var e=r();e&&(e.style.removeProperty("--app-viewport-height"),e.style.removeProperty("--app-viewport-top"))}}document.addEventListener("focusin",function(){o(),[60,160,300,520,800,1200].forEach(function(t){e.push(setTimeout(n,t))})},!0),document.addEventListener("focusout",function(){o(),e.push(setTimeout(i,60))},!0),window.addEventListener("resize",n),window.visualViewport&&window.visualViewport.addEventListener("resize",n)}(),"serviceWorker"in navigator&&"https:"===location.protocol){var e=!!navigator.serviceWorker.controller,t=!1;navigator.serviceWorker.addEventListener("controllerchange",function(){e&&!t&&(t=!0,location.reload())}),addEventListener("load",function(){navigator.serviceWorker.register("./sw.js").then(function(e){e.update()}).catch(function(){})})}</script><meta content="0.30.0" name="application-version"><script defer src="static/js/main.0bedc68d.js"></script><link href="static/css/main.05145fac.css" rel="stylesheet"></head><body><div id="root"></div></body></html>

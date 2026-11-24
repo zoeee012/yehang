@@ -1,0 +1,1 @@
+self.addEventListener("install",()=>self.skipWaiting()),self.addEventListener("activate",e=>{e.waitUntil((async()=>{let e=await caches.keys();await Promise.all(e.map(e=>caches.delete(e))),await self.clients.claim()})())}),self.addEventListener("fetch",e=>{let t=e.request;"navigate"===t.mode&&e.respondWith(fetch(t,{cache:"no-store"}).catch(()=>fetch(t)))});
